@@ -1,10 +1,11 @@
 @extends('layouts.frontend')
 @section('content')
+
     <section class="content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 breadcrumbf">
-                    <a href="/">selp</a> <span class="diviver">&gt;</span> <a href="{{route('questions.index')}}">General Discussion</a> <span class="diviver">&gt;</span> <a >Topic Details</a>
+                    <a href="#">Selp</a> <span class="diviver">&gt;</span> <a href="#">All Discussion</a> <span class="diviver">&gt;</span> <a>Edit Reply</a>
                 </div>
             </div>
         </div>
@@ -13,138 +14,50 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-8">
+                    <div class="post">
+                        <form action="{{route('questions.answers.update', [$question->id, $answer->id])}}" class="form newtopic" method="post">
+                            @csrf
+                            @method('PATCH')
+                            <div class="topwrap">
+                                <div class="userinfo pull-left">
+                                    <div class="avatar">
+                                        <img src="images/avatar4.jpg" alt="{{Auth::user()->name}}" />
+                                        <div class="status red">&nbsp;</div>
+                                    </div>
 
-                    <!-- POST -->
-                    <div class="post beforepagination">
-                        <div class="topwrap">
-                            <div class="userinfo pull-left">
-                                <div class="avatar">
-                                    <img src="images/avatar.jpg" alt="" />
-                                    <div class="status green">&nbsp;</div>
+                                    <div class="icons">
+                                        <img src="images/icon3.jpg" alt="" /><img src="images/icon4.jpg" alt="" /><img src="images/icon5.jpg" alt="" /><img src="images/icon6.jpg" alt="" />
+                                    </div>
+                                </div>
+                                <div class="posttext pull-left">
+
+                                    <div>
+                                        <textarea name="body" id="desc" placeholder="Body"  class="form-control {{$errors->has('body') ? 'is-invalid' : ''}}">{{old('body', $answer->body)}}</textarea>
+
+                                        @if ($errors->has('body'))
+                                            <div class="invalid-feedback">
+                                                <strong>{{$errors->first('body')}}</strong>
+                                            </div>
+                                        @endif
+                                    </div>
+
+
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="postinfobot">
+
+                                <div class="pull-right postreply">
+                                    <div class="pull-left smile"><a href="#"><i class="fa fa-smile-o"></i></a></div>
+                                    <div class="pull-left"><button type="submit" class="btn btn-primary">Update Reply</button></div>
+                                    <div class="clearfix"></div>
                                 </div>
 
-                                <div class="icons">
-                                    <img src="images/icon1.jpg" alt="" /><img src="images/icon4.jpg" alt="" /><img src="images/icon5.jpg" alt="" /><img src="images/icon6.jpg" alt="" />
-                                </div>
+
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="posttext pull-left">
-                                <h2>{{$question->title}}</h2>
-                                <p>{{$question->body}}</p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="postinfobot">
-
-                            <div class="likeblock pull-left">
-                                <a href="#" class="up"><i class="fa fa-thumbs-o-up"></i>25</a>
-                                <a href="#" class="down"><i class="fa fa-thumbs-o-down"></i>3</a>
-                            </div>
-
-                            <div class="prev pull-left">
-                                <a href="#"><i class="fa fa-reply"></i></a>
-                            </div>
-
-                            <div class="posted pull-left"><i class="fa fa-clock-o"></i> Posted on : 20 Nov @ 9:30am</div>
-
-                            <div class="pull-right">
-                                <a title="Click to mark as favorite question (CLick again to undo)" class="favorite mt-2 {{ Auth::guest() ? 'off' : ($question->is_favorited ? 'favorited' : '') }}"
-                                   onclick="event.preventDefault(); document.getElementById('favorite-question-{{$question->id}}').submit()">
-                                    <i class="fa fa-heart"></i>
-                                </a>
-                                <span class="favorites-count">{{$question->favorites_count}}</span>
-                                <form id="favorite-question-{{$question->id}}" action="/questions/{{$question->id}}/favorites" method="POST" style="display: none">
-                                    @csrf
-                                    @if($question->is_favorited)
-                                        @method('DELETE')
-                                    @endif
-                                </form>
-                            </div>
-
-                            <div class="clearfix"></div>
-                        </div>
-                    </div><!-- POST -->
-
-                    <div class="paginationf">
-                        <div class="pull-left"><a href="#" class="prevnext"><i class="fa fa-angle-left"></i></a></div>
-                        <div class="pull-left">
-                            <ul class="paginationforum">
-                                <li class="hidden-xs"><a href="#">1</a></li>
-                                <li class="hidden-xs"><a href="#">2</a></li>
-                                <li class="hidden-xs"><a href="#">3</a></li>
-                                <li class="hidden-xs"><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">6</a></li>
-                                <li><a href="#" class="active">7</a></li>
-                                <li><a href="#">8</a></li>
-                                <li class="hidden-xs"><a href="#">9</a></li>
-                                <li class="hidden-xs"><a href="#">10</a></li>
-                                <li class="hidden-xs hidden-md"><a href="#">11</a></li>
-                                <li class="hidden-xs hidden-md"><a href="#">12</a></li>
-                                <li class="hidden-xs hidden-sm hidden-md"><a href="#">13</a></li>
-                                <li><a href="#">1586</a></li>
-                            </ul>
-                        </div>
-                        <div class="pull-left"><a href="#" class="prevnext last"><i class="fa fa-angle-right"></i></a></div>
-                        <div class="clearfix"></div>
+                        </form>
                     </div>
-
-                    @include('frontend.answers.index', ['answers' => $question->answers,
-                              'answersCount' => $question->answers_count])
-
-                    <!-- POST -->
-{{--                    <div class="post">--}}
-{{--                        <div class="topwrap">--}}
-{{--                            <div class="userinfo pull-left">--}}
-{{--                                <div class="avatar">--}}
-{{--                                    <img src="images/avatar3.jpg" alt="" />--}}
-{{--                                    <div class="status red">&nbsp;</div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="icons">--}}
-{{--                                    <img src="images/icon3.jpg" alt="" /><img src="images/icon4.jpg" alt="" /><img src="images/icon5.jpg" alt="" /><img src="images/icon6.jpg" alt="" />--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="posttext pull-left">--}}
-
-{{--                                <blockquote>--}}
-{{--                                    <span class="original">Original Posted by - theguy_21:</span>--}}
-{{--                                    Did you see that Dove ad pop up in your Facebook feed this year? How about the Geico camel one?--}}
-{{--                                </blockquote>--}}
-{{--                                <p>Toronto Mayor Rob Ford does not have a bigger fan than "Anchorman's" Ron Burgundy. In fact, Burgundy wants Ford to be re-elected so much, that he agreed to sing the campaign song Brien. The tune in question ...</p>--}}
-{{--                            </div>--}}
-{{--                            <div class="clearfix"></div>--}}
-{{--                        </div>--}}
-{{--                        <div class="postinfobot">--}}
-
-{{--                            <div class="likeblock pull-left">--}}
-{{--                                <a href="#" class="up"><i class="fa fa-thumbs-o-up"></i>55</a>--}}
-{{--                                <a href="#" class="down"><i class="fa fa-thumbs-o-down"></i>12</a>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="prev pull-left">--}}
-{{--                                <a href="#"><i class="fa fa-reply"></i></a>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="posted pull-left"><i class="fa fa-clock-o"></i> Posted on : 20 Nov @ 9:50am</div>--}}
-
-{{--                            <div class="next pull-right">--}}
-{{--                                <a href="#"><i class="fa fa-share"></i></a>--}}
-
-{{--                                <a href="#"><i class="fa fa-flag"></i></a>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="clearfix"></div>--}}
-{{--                        </div>--}}
-{{--                    </div><!-- POST -->--}}
-
-
-
-                    <!-- Creating Answers -->
-                    @include('frontend.answers.create')
-
-                    <!-- Creating Answers -->
-
-
                 </div>
                 <div class="col-lg-4 col-md-4">
 
@@ -252,7 +165,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-8 col-xs-12">
                     <div class="pull-left"><a href="#" class="prevnext"><i class="fa fa-angle-left"></i></a></div>
                     <div class="pull-left">
                         <ul class="paginationforum">
@@ -278,5 +191,7 @@
             </div>
         </div>
 
+
     </section>
-    @stop
+
+@stop

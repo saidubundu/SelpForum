@@ -9,9 +9,9 @@ use mysql_xdevapi\CrudOperationBindable;
 
 class QuestionsController extends Controller
 {
-    public function __construct()
+    public function  __construct()
     {
-        $this->middleware('auth', ['excerpt' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
     /**

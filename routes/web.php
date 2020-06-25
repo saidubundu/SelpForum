@@ -19,6 +19,10 @@ Route::get('/', function () {
 
 Route::resource('questions', 'QuestionsController')->except('show');
 Route::get('/questions/{slug}', 'QuestionsController@show')->name('questions.show');
+Route::resource('questions.answers', 'AnswerController')->only(['store', 'edit', 'update', 'destroy']);
+Route::post('/answers/{answer}/accept', 'AcceptAnswerController')->name('answers.accept');
+Route::post('/questions/{question}/favorites', 'FavoritesController@store')->name('questions.favorites');
+Route::delete('/questions/{question}/favorites', 'FavoritesController@destroy')->name('questions.unfavorites');
 
 
 Auth::routes();

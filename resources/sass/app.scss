@@ -434,10 +434,52 @@ td.chbox {
     border-radius: 2px;
     box-shadow: 0 1px 2px #c9cccd;
     margin-bottom: 20px;
+
+    &.answered-accepted{
+        background-color: $color-lightGreen;
+    }
+}
+
+    span{
+        &.votes-count {
+            font-size: 25px;
+        }
+
+        &.favorites-count{
+            margin-left: 10px;
+            font-size: 12px;
+        }
+    }
+
+a {
+    cursor: pointer;
+    color: $gray-600;
+
+    &.off, &.off:hover {
+        color: $gray-500;
+    }
+
+    &.favorite {
+        &.favorited, &.favorited:hover{
+            color: $red;
+        }
+    }
+
+    &.vote-accepted{
+        color: $green;
+    }
 }
 
 .post .wrap-ut {
     width: 85%;
+}
+
+.post .posttext .actionBtn{
+    display: none;
+}
+
+.post:hover .actionBtn{
+    display: inline-block;
 }
 
 .post .userinfo {
@@ -590,6 +632,14 @@ td.chbox {
     border-top: solid 1px #f1f1f1;
     line-height: 50px;
     padding: 0 30px 0 94px;
+}
+
+.postinfobot .actionBtn{
+    display: none;
+}
+
+.postinfobot:hover .actionBtn{
+    display: inline-block;
 }
 
 
