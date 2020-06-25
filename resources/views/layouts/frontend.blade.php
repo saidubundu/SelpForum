@@ -10,7 +10,8 @@
     <link href="{{asset('frontend/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Custom -->
-    <link href="{{asset('frontend/css/custom.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('frontend/css/custom.css')}}">
+    <link href="{{asset('css/app.css')}}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,7 +28,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/css/style.css')}}" media="screen" />
 
     <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
-    <link rel="stylesheet" type="text/css" href="{{asset('frontend/rs-plugin/css/settings.css')}}" media="screen" />
+{{--    <link rel="stylesheet" type="text/css" href="{{asset('frontend/rs-plugin/css/settings.css')}}" media="screen" />--}}
 
 </head>
 <body>
@@ -55,13 +56,7 @@
                 <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="index.html"><img src="images/logo.jpg" alt=""  /></a></div>
                 <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
                     <div class="dropdown">
-                        <a data-toggle="dropdown" href="#" >Borderlands 2</a> <b class="caret"></b>
-                        <ul class="dropdown-menu" role="menu">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Borderlands 1</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-2" href="#">Borderlands 2</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-3" href="#">Borderlands 3</a></li>
-
-                        </ul>
+                        <a data-toggle="dropdown" href="#" >SELP</a> <b class="caret"></b>
                     </div>
                 </div>
                 <div class="col-lg-4 search hidden-xs hidden-sm col-md-3">
@@ -75,9 +70,7 @@
                 </div>
                 <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
                     <div class="stnt pull-left">
-                        <form action="http://forum.azyrusthemes.com/03_new_topic.html" method="post" class="form">
-                            <button class="btn btn-primary">Start New Topic</button>
-                        </form>
+                            <a href="{{route('questions.create')}}" class="btn btn-primary">Start New Topic</a>
                     </div>
                     <div class="env pull-left"><i class="fa fa-envelope"></i></div>
 
@@ -104,7 +97,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-1 col-xs-3 col-sm-2 logo "><a href="#"><img src="images/logo.jpg" alt=""  /></a></div>
-                <div class="col-lg-8 col-xs-9 col-sm-5 ">Copyrights 2014, websitename.com</div>
+                <div class="col-lg-8 col-xs-9 col-sm-5 ">Copyrights 2014, selp.com - <span>Powered by: <a href="">PeekTower</a></span></div>
                 <div class="col-lg-3 col-xs-12 col-sm-5 sociconcent">
                     <ul class="socialicons">
                         <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
@@ -121,7 +114,8 @@
 </div>
 
 <!-- get jQuery from the google apis -->
-<script type="text/javascript" src="../ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
+{{--<script type="text/javascript" src="../ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>--}}
+<script type="text/javascript" src="{{asset('frontend/js/jquery.js')}}"></script>
 
 
 <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->

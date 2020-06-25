@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AskQuestionRequest;
 use App\Question;
 use Illuminate\Http\Request;
+use mysql_xdevapi\CrudOperationBindable;
 
 class QuestionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['excerpt' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,8 @@ class QuestionsController extends Controller
     public function index()
     {
         //
-        return view('frontend.questions.index');
+        $questions = Question::with('user')->latest()->paginate(7);
+        return view('frontend.questions.index', compact('questions'));
     }
 
     /**
@@ -23,9 +31,10 @@ class QuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Question $question)
     {
         //
+        return view('frontend.questions.create',compact('question'));
     }
 
     /**
@@ -34,20 +43,27 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AskQuestionRequest $request)
     {
         //
+        $request->user()->questions()->create($request->only(
+            'title', 'body'
+        ));
+        return redirect()->route('questions.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Question  $question
+     * @param  \App\Question  $id
      * @return \Illuminate\Http\Response
      */
     public function show(Question $question)
     {
         //
+        $question->increment('views');
+        return view('frontend.questions.show', compact('question'));
+
     }
 
     /**
@@ -59,6 +75,8 @@ class QuestionsController extends Controller
     public function edit(Question $question)
     {
         //
+        $this->authorize("update", $question);
+        return view('frontend.questions.edit', compact('question'));
     }
 
     /**
@@ -68,9 +86,15 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request, Question $question)
     {
         //
+        $this->authorize('update', $question);
+        $question->update($request->only(
+            'title', 'body'));
+
+        return redirect()->route('questions.index')
+            ->with('Success', "Your question updated successfully!");
     }
 
     /**
@@ -82,5 +106,9 @@ class QuestionsController extends Controller
     public function destroy(Question $question)
     {
         //
+        $this->authorize('delete', $question);
+        $question->delete();
+        return redirect()->route('questions.index')
+            ->with('Success', "Your Question deleted successfully!");
     }
 }
